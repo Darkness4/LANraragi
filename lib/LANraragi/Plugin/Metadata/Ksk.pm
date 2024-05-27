@@ -72,6 +72,7 @@ sub tags_from_ksk_yaml {
     my $artists  = $hash->{"Artist"};
     my $magazine = $hash->{"Magazine"};
     my $url      = $hash->{"URL"};
+    my $released  = $hash->{"Released"};
 
     foreach my $tag (@$tags) {
         push( @found_tags, $tag );
@@ -88,6 +89,8 @@ sub tags_from_ksk_yaml {
     if ($assume_english) {
         push( @found_tags, "language:english" );
     }
+
+    push( @found_tags, "released:" . $released ) unless !$released;
 
     push( @found_tags, "source:" . $url ) unless !$url;
 
