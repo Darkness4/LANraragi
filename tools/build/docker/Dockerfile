@@ -1,5 +1,5 @@
 # DOCKER-VERSION 0.3.4
-FROM        alpine:3.18
+FROM        alpine:3.20
 LABEL       git="https://github.com/Difegue/LANraragi"
 ARG INSTALL_PARAMETER
 
@@ -26,26 +26,26 @@ EXPOSE 3000
 
 # Enable UTF-8 (might not do anything extra on alpine tho)
 ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 \
-    # rootless user id
-    LRR_UID=9001 LRR_GID=9001 \
-    # Environment variables overridable by the user on container deployment
-    LRR_NETWORK=http://*:3000 \
-    # extra variables
-    EV_EXTRA_DEFS=-DEV_NO_ATFORK \
-    # Enable automatic http proxy detection for mojo
-    MOJO_PROXY=1 \
-    # Allow Mojo to automatically pick up the X-Forwarded-For and X-Forwarded-Proto headers
-    MOJO_REVERSE_PROXY=1 \
-    # Attempt to fix file permissions automatically
-    LRR_AUTOFIX_PERMISSIONS=1
+  # rootless user id
+  LRR_UID=9001 LRR_GID=9001 \
+  # Environment variables overridable by the user on container deployment
+  LRR_NETWORK=http://*:3000 \
+  # extra variables
+  EV_EXTRA_DEFS=-DEV_NO_ATFORK \
+  # Enable automatic http proxy detection for mojo
+  MOJO_PROXY=1 \
+  # Allow Mojo to automatically pick up the X-Forwarded-For and X-Forwarded-Proto headers
+  MOJO_REVERSE_PROXY=1 \
+  # Attempt to fix file permissions automatically
+  LRR_AUTOFIX_PERMISSIONS=1
 
 RUN \
   if [ $(getent group ${LRR_GID}) ]; then \
-    adduser -D -u ${LRR_UID} koyomi; \
+  adduser -D -u ${LRR_UID} koyomi; \
   else \
-    addgroup -g ${LRR_GID} koyomi && \
-    adduser -D -u ${LRR_UID} -G koyomi koyomi; \
-fi
+  addgroup -g ${LRR_GID} koyomi && \
+  adduser -D -u ${LRR_UID} -G koyomi koyomi; \
+  fi
 
 WORKDIR /home/koyomi/lanraragi
 
